@@ -17,47 +17,35 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<StackPanel Name="Wrapper"
-				DataContext="{Binding MeasurementListViewModel}"
-				>
+	<Grid Name="Root"
+	      DataContext="{Binding MeasurementListViewModel}"
+		  RowDefinitions="Auto, *, Auto">
 		
-		<StackPanel Name="TitlePanel">
-			<TextBlock Text="Health Tracker" />
-		</StackPanel>
-	
-		<StackPanel HorizontalAlignment="Stretch"
-					VerticalAlignment="Top"
-					Name="MeasurementListPanel"
-					>
-			<Grid RowDefinitions="Auto, *, Auto"
-				  x:Name="Root">
+		<TextBlock Text="Health Tracker" 
+				   Grid.Row="0"/>
+				
+		<ScrollViewer Grid.Row="1">
+			<ItemsControl ItemsSource="{Binding Measurements}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="m:Measurement">
+						<Grid ColumnDefinitions="*, Auto"
+								Height="50">
+							<TextBlock Text="{Binding Value}"
+										HorizontalAlignment="Stretch"/>
+							<TextBlock Text="{Binding DateTime}"
+										HorizontalAlignment="Right"/>
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
 
-				<ScrollViewer Grid.Row="1">
-					<ItemsControl ItemsSource="{Binding Measurements}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate DataType="m:Measurement">
-								<Grid ColumnDefinitions="*, Auto">
-									<TextBlock Text="{Binding DateTime}"
-											   HorizontalAlignment="Right"/>
-									<TextBlock Text="{Binding Value}"
-											   HorizontalAlignment="Stretch"/>
-								</Grid>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</ScrollViewer>
-			</Grid>
-		</StackPanel> <!--End MeasurementList-->
-
-		<StackPanel Name="AddButtonPanel"
-					VerticalAlignment="Bottom">
-		</StackPanel> <!--End AddButtonPanel-->
-			<Button Command="{Binding AddDummyMeasurementCommand}"
-					HorizontalAlignment="Stretch">
-				Add
-			</Button>
+		<Button Command="{Binding AddDummyMeasurementCommand}"
+				HorizontalAlignment="Stretch"
+				Grid.Row="2">
+			Add
+		</Button>
 		
-		
-	</StackPanel> <!--End Wrapper-->
+	</Grid>
 
 </Window>
