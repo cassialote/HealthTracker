@@ -2,29 +2,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:m="using:HealthTracker.Models"
         xmlns:vm="using:HealthTracker.ViewModels"
+        xmlns:view="using:HealthTracker.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="360" d:DesignHeight="800"
+		Width="360" Height="800"
         x:Class="HealthTracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="HealthTracker"
 		>
 
-    <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
+	      <!--DataContext="{Binding MeasurementListViewModel}"-->
 	<Grid Name="Root"
-	      DataContext="{Binding MeasurementListViewModel}"
-		  RowDefinitions="Auto, *, Auto">
+		  RowDefinitions="75, 
+						  Auto, 
+						  *, 
+						  Auto"
+		  HorizontalAlignment="Stretch"
+		  Background="{DynamicResource ErrorBrush}">	<!--TODO -> Dynamic resource doesn't work?-->
 		
+		<!--Header-->
 		<TextBlock Text="Health Tracker" 
-				   Grid.Row="0"/>
-				
-		<ScrollViewer Grid.Row="1">
+				   Grid.Row="0"
+				   Margin="10"
+				   FontSize="22" FontWeight="Bold" FontFamily="Roboto"/>
+
+
+		<!--Nav-->
+		<Grid ColumnDefinitions="*, *, *" Grid.Row="1">
+			<!--<Button Command="{Binding AddDummyMeasurementCommand}" Grid.Column="0" Margin="2">Weight</Button>
+			<Button Command="{Binding AddDummyMeasurementCommand}" Grid.Column="1" Margin="2">Glucose</Button>
+			<Button Command="{Binding AddDummyMeasurementCommand}" Grid.Column="2" Margin="2">Blood Press</Button>-->
+			
+			<Button Command="{Binding GoToWeightListCommand}" Grid.Column="0" Margin="2">Weight</Button>
+			<Button Grid.Column="1" Margin="2">Glucose</Button>
+			<Button Grid.Column="2" Margin="2">Blood Press</Button>
+		</Grid>
+		
+		<!--Content-->
+		<!--<ContentControl Grid.Row="2"><view:HomePage/></ContentControl>-->
+
+		<ContentControl Grid.Row="2" Content="{Binding CurrentPage}"/>
+		
+		
+		<!--<ScrollViewer Grid.Row="2">
 			<ItemsControl ItemsSource="{Binding Measurements}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="m:Measurement">
@@ -38,11 +66,17 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
-		</ScrollViewer>
+		</ScrollViewer>-->
 
-		<Button Command="{Binding AddDummyMeasurementCommand}"
+		<!--<Button Command="{Binding AddDummyMeasurementCommand}"
 				HorizontalAlignment="Stretch"
-				Grid.Row="2">
+				Grid.Row="3">
+			Add
+		</Button>-->
+		
+		<Button 
+				HorizontalAlignment="Stretch"
+				Grid.Row="3">
 			Add
 		</Button>
 		

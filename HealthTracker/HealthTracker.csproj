@@ -24,4 +24,13 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\WeightListView.axaml.cs">
+      <DependentUpon>WeightListView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HomePageView.axaml.cs">
+      <DependentUpon>HomePageView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
